@@ -1,42 +1,28 @@
 version: '3.6'
-networks:
-    nplnet:
-        driver: bridge
+
 services:
   zookeeper:
-    image: 'bitnami/zookeeper:latest'
-    container_name: 'zookeeper'
-    networks:
-      - 'nplnet'
-    ports:
-      - '2181:2181'
-    logging:
-      driver: none
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
     environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-    networks:
-      - nplnet
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
   kafka:
-    image: 'bitnami/kafka:latest'
     container_name: kafka
-    hostname: kafka
-    ports:
-      - '9092:9092'
-      - '9093:9093'
-      - '9094:9094'
-    logging:
-      driver: none
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
-      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
-    networks:
-      - nplnet
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
   akhq:
     image: tchiotludo/akhq
     container_name: kafkaui
@@ -50,9 +36,11 @@ services:
                 bootstrap.servers: "kafka:9092"
     ports:
       - 8080:8080
-    links:
+    depends_on:
       - kafka
-    logging:
-      driver: none
-    networks:
-      - nplnet
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local

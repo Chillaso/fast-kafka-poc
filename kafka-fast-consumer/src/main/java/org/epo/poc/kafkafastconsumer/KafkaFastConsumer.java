@@ -1,5 +1,6 @@
 package org.epo.poc.kafkafastconsumer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.epo.poc.kafkafastconsumer.model.Todo;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Component
+@Slf4j
 public class KafkaFastConsumer {
 
     /**
@@ -21,7 +23,8 @@ public class KafkaFastConsumer {
     private Consumer<List<Todo>> process() {
         return todoList -> {
             todoList.forEach(todo -> {
-               todo.setTask(todo.getTask().toUpperCase());
+                todo.setTask(todo.getTask().toUpperCase());
+                log.info(todo.toString());
             });
         };
     }

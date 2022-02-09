@@ -1,0 +1,13 @@
+application:
+  instanceName: dev
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          defaultBrokerPort: 29092
+      bindings:
+        producer-out-0:
+          content-type: application/json
+          destination: private_poc_kafka_fast_consumer_batchin_${application.instanceName}
