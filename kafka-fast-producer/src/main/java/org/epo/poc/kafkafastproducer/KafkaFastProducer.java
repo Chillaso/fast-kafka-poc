@@ -2,6 +2,8 @@ package org.epo.poc.kafkafastproducer;
 
 import org.epo.poc.kafkafastproducer.model.Todo;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -10,9 +12,11 @@ import java.util.function.Supplier;
 @Component
 public class KafkaFastProducer {
 
-    @Bean
-    public Supplier<Todo> producer() {
-        return () -> new Todo("Random text: " + generateRandomAlphabeticText());
+    @Bean()
+    public Supplier<Message<Todo>> producer() {
+        return () ->  MessageBuilder.withPayload(
+                                     new Todo("Random text: " + generateRandomAlphabeticText()))
+                                     .build();
     }
 
     private String generateRandomAlphabeticText() {

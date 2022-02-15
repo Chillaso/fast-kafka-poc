@@ -2,9 +2,7 @@ package org.epo.poc.kafkafastconsumer.model;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class Todo {
     private String task;
 }

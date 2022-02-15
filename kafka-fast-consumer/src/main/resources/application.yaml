@@ -4,13 +4,22 @@ spring:
   cloud:
     stream:
       kafka:
+        default:
+          consumer:
+            ackMode: MANUAL
         binder:
           defaultBrokerPort: 29092
+          consumer-properties:
+            # The number of messages your consumer can process within max.poll.interval.ms (5 minutes by default)
+            # Note that the actual number of messages fetched by one poll also depends on max.partition.fetch.bytes (1 MB by default)
+            # Kafka's default for max.poll.records is 500
+            max.poll.records: 500
       bindings:
         process-in-0: # Name 'process' is the name of my function annotated with @Bean
           destination: private_poc_kafka_fast_consumer_batchin_${application.instanceName}
           group: poc_kafka_fast_consumer_batchin_consumergroup_${application.instanceName}
           consumer:
+            # Consumes messages in batches using max.poll.records as a number of messages in the batch
             batch-mode: true
         process-out-0:
           destination: private_poc_kafka_fast_consumer_batchout_${application.instanceName}

@@ -4,6 +4,9 @@ application:
 spring:
   cloud:
     stream:
+      poller:
+        fixedDelay: 500
+        maxMessagesPerPoll: 1000
       kafka:
         binder:
           defaultBrokerPort: 29092
