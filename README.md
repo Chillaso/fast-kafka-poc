@@ -4,7 +4,13 @@ Kafka consumer implemented with Spring Cloud Streams, using Spring Functions and
 
 Usually the best use case to implement this is if you need you have huge time between message processing, or a very variable time that change every message and you can't control with kafka configuration. 
 
-## Important concepts
+## Relevant links
+
+* [Spring cloud streams, Kafka binder documentation](https://docs.spring.io/spring-cloud-stream-binder-kafka/docs/3.2.1/reference/html/spring-cloud-stream-binder-kafka.html#_functional_style)
+* [Spring cloud streams, functional and reactive](https://spring.io/blog/2019/10/17/spring-cloud-stream-functional-and-reactive)
+* [Project reactor documentation](https://projectreactor.io/docs)
+
+## Important configuration
 
 To produce message to Kafka topic in batch mode it's important to use this configuration:
 
@@ -52,3 +58,5 @@ private void pauseConsumer(org.apache.kafka.clients.consumer.Consumer<?,?> consu
     log.info("--> CONSUMER PAUSED");
     }
 ```
+
+For sure, you'll need to resume the consumer in a very similar way, you can check the code [here](kafka-fast-consumer/src/main/java/org/cgg/poc/kafkafastconsumer/KafkaFastConsumer.java)
