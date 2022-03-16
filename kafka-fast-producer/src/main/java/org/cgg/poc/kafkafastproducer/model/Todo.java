@@ -1,4 +1,4 @@
-package org.epo.poc.kafkafastproducer.model;
+package org.cgg.poc.kafkafastproducer.model;
 
 import lombok.*;
 

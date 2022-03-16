@@ -1,4 +1,4 @@
-package org.epo.poc.kafkafastconsumer.model;
+package org.cgg.poc.kafkafastconsumer.model;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package org.epo.poc.kafkafastconsumer;
+package org.cgg.poc.kafkafastconsumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

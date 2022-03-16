@@ -1,6 +1,6 @@
-package org.epo.poc.kafkafastproducer;
+package org.cgg.poc.kafkafastproducer;
 
-import org.epo.poc.kafkafastproducer.model.Todo;
+import org.cgg.poc.kafkafastproducer.model.Todo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -27,7 +27,7 @@ public class KafkaFastProducer {
 
         return random.ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
                 .toString();
     }
 }

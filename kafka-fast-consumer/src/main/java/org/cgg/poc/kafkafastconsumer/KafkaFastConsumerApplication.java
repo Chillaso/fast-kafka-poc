@@ -1,4 +1,4 @@
-package org.epo.poc.kafkafastconsumer;
+package org.cgg.poc.kafkafastconsumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

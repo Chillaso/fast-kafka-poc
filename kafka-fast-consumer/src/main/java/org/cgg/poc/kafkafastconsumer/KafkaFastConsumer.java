@@ -1,8 +1,7 @@
-package org.epo.poc.kafkafastconsumer;
+package org.cgg.poc.kafkafastconsumer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.epo.poc.kafkafastconsumer.model.Todo;
-import org.slf4j.Logger;
+import org.cgg.poc.kafkafastconsumer.model.Todo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -13,10 +12,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 @Component
 @Slf4j
@@ -26,7 +22,7 @@ public class KafkaFastConsumer {
      * Consumer function will be exposed to Spring context as a message stream listener
      * in this case, for kafka due we have kafka binder in the configuration.
      *
-     * We accept a list of {@link org.epo.poc.kafkafastconsumer.model.Todo} objects cause we want to process in batch mode. See configuration.
+     * We accept a list of {@link org.cgg.poc.kafkafastconsumer.model.Todo} objects cause we want to process in batch mode. See configuration.
      */
     @Bean
     private Consumer<Message<List<Todo>>> process() {
@@ -35,7 +31,7 @@ public class KafkaFastConsumer {
                             .map(Message::getHeaders)
                             .map(it -> it.get(KafkaHeaders.CONSUMER, org.apache.kafka.clients.consumer.Consumer.class))
                             .orElseThrow(NullPointerException::new);
-//            pauseConsumer(consumer);
+            pauseConsumer(consumer);
 
             final List<Todo> todos = message.getPayload();
             Flux.fromIterable(todos)
@@ -47,7 +43,7 @@ public class KafkaFastConsumer {
                 .doOnSuccess(unused -> {
                     log.info("FINISHED");
                     commit(message);
-//                    resumeConsumer(consumer);
+                    resumeConsumer(consumer);
                 })
                 .block();
             log.info("REAL FINISHED");

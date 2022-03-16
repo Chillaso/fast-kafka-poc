@@ -1,4 +1,4 @@
-package org.epo.poc.kafkafastproducer;
+package org.cgg.poc.kafkafastproducer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

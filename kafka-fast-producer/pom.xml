@@ -6,9 +6,9 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from rcggsitory -->
 	</parent>
-	<groupId>org.epo.poc</groupId>
+	<groupId>org.cgg.poc</groupId>
 	<artifactId>kafka-fast-producer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>kafka-fast-producer</name>
